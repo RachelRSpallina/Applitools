@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using NUnit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Text;
@@ -18,30 +19,51 @@ namespace TraditionalTests
     public static class DynamicContentTest
     {
         // public IWebElement baseTable = driver.FindElement(By.TagName("table"));
-        public static IWebDriver driver = new ChromeDriver();
-       
+         // public static IWebDriver driver = ChromeDriver();
+
 
         public static void GetRowData()
         {
-            // IWebElement tableRow = baseTable.FindElement(By.XPath("//*[@id='amount']/"));
-            // IWebElement tableRow = driver.FindElement(By.XPath("//*[@id='transactionsTable']/tbody/tr[1]/td[5]/span"));
-            // IWebElement getCellData = tableRow.FindElement(By.XPath("//*[@id="transactionsTable"]/tbody/tr[1]/td[5]/span"));
-            // string rowtext = tableRow.getText();
-            // IWebElement transactionTable = driver.FindElement(By.XPath("//table[@id='amount']/"));
-            IJavaScriptExecutor javascriptDriver = (IJavaScriptExecutor)driver;
-            IWebElement table = driver.FindElement(By.XPath("//*[@id='amount']/"));
-            List<IWebElement> rows = table.FindElement(By.XPath('tr'));
-            for (int i = 0; i < rows.Count(); i++)
-            {
-                String name = rows.get(i).findElements(By.XPath("tr/td")).get(1).getText();
-            }
+          //Get table data on screen load
+          // IWebElement tableElement = Login.driver.FindElement(By.XPath("//*[@id='transactionsTable']"));
+          // IList<IWebElement> tableRow = tableElement.FindElements(By.TagName("tr"));
+          // IList<IWebElement> rowTD;
+          // List<String> NewList = new List<String>();
+         
+          //  //Click Amount header
+          //IWebElement amount= Login.driver.FindElement(By.XPath("//*[@id=\"transactionsTable\"]/table/thead/tr/th[5]"));
+
+        
+          //  foreach (var item in tableRow)
+          //   {
+          //  NewList.Add(item.Text);
+          //  }
+          //  //Get Table after click
+          //  IWebElement tableElementAfterClick = Login.driver.FindElement(By.XPath("//*[@id='transactionsTable']"));
+          //  IList<IWebElement> tableRowAfterClick = tableElement.FindElements(By.TagName("tr"));
+
+
+            IWebElement elemTable = Login.driver.FindElement(By.XPath("//*[@id='transactionsTable']"));
+            List<IWebElement> lstTrElem = new List<IWebElement>(elemTable.FindElements(By.TagName("tr")));
+            IWebElement row = lstTrElem.Where(item => item.Text.Contains("AMOUNT")).FirstOrDefault();
+           // string rowid = row.GetAttribute("data-uid");
+            //IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+            //for (int i = 0; i < cells.Count; i++)
+            //{
+            //    IWebElement cell = cells[i];
+            //}
+            //row.FindElement(By.ClassName("cell-popover")).Click();
+
         }
 
         public static void ValidateAscendingOrder()
         {
-            driver.FindElement(By.Id("amount")).Clear();
+            Login.driver.FindElement(By.Id("amount")).Clear();
         }
 
         public static void ClickCompareExpenses()
         {
-            driver.FindElement(By.Id("showExpensesChart")).Click();
+            Login.driver.FindElement(By.Id("showExpensesChart")).Click();
+        }
+    }
+}
